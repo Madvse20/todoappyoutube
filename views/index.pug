@@ -1,0 +1,36 @@
+extends layout
+
+block content
+    .row
+        .col-md-4
+            .card
+                .card-header
+                    h3 Eine Aufgabe hinzufügen
+                .card-body  
+                    form(action="/hinzufuegen", method="POST")
+                        .form-group
+                            label(for='todo') Eine Aufgabe hinzufügen:
+                            input.form-control#todo(type='text', name="title")
+                        button(type="submit").btn.btn-primary.btn-block
+                            | Hinzufuegen
+                            i.fas.fa-plus.pl-1
+        .col-md-8
+            table.table.table-striped
+                thead
+                    tr
+                        th(scope='col') id
+                        th(scope='col') Todo
+                        th(scope='col') bearbeiten
+                        th(scope='col') löschen
+                tbody
+                    each todo in todos
+                        tr
+                            th(scope='row')= todo.id
+                            td= todo.title
+                            td
+                                a(href="/bearbeiten/" + todo.id).btn.btn-info.btn-sm 
+                                    i.fas.fa-pencil-alt
+                            td
+                                form(method="POST", action="/loeschen/" + todo.id + "?_method=DELETE")
+                                    button(type="submit").btn.btn-danger.btn-sm 
+                                        i.fas.fa-trash-alt
